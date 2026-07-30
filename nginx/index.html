@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Solutions - Nginx</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#0b3d2e; color:#fff; text-align:center; padding-top:80px; }
+    h1 { font-size: 2.5em; }
+    span { color:#8ee6b0; }
+    .pod { margin-top: 40px; font-size: 0.9em; color:#8ee6b0; opacity: 0.85; }
+    code { background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Servidor <span>Nginx</span></h1>
+  <p>Rodando em container Docker, orquestrado pelo Kubernetes.</p>
+  <p>Porta exposta: <strong>8080</strong></p>
+  <p class="pod">Respondido pelo pod: <code>{{POD_NAME}}</code></p>
+</body>
+</html>

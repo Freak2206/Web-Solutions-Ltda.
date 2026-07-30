@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-deployment
+  labels:
+    app: apache-web-solutions
+spec:
+  replicas: 2                      # 2 réplicas: alta disponibilidade e base para escalar
+  selector:
+    matchLabels:
+      app: apache-web-solutions
+  template:
+    metadata:
+      labels:
+        app: apache-web-solutions
+    spec:
+      containers:
+        - name: apache
+          image: web-solutions/apache:1.0    # imagem construída a partir do Dockerfile em /apache
+          ports:
+            - containerPort: 80               # porta interna que o Apache escuta dentro do container
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 15

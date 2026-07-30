@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx-web-solutions
+spec:
+  replicas: 2                      # 2 réplicas: alta disponibilidade e base para escalar
+  selector:
+    matchLabels:
+      app: nginx-web-solutions
+  template:
+    metadata:
+      labels:
+        app: nginx-web-solutions
+    spec:
+      containers:
+        - name: nginx
+          image: web-solutions/nginx:1.0    # imagem construída a partir do Dockerfile em /nginx
+          ports:
+            - containerPort: 80              # porta interna que o Nginx escuta dentro do container
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 15
